@@ -1,9 +1,16 @@
 import '@/styles/globals.css';
 
+import { PersonStructuredData } from '@/components/seo/StructuredData';
+import { A11yProvider } from '@/components/A11yProvider';
+import { DevAxeAudit } from '@/lib/a11y/DevAxeAudit';
+import { FpsHud } from '@/lib/perf/FpsHud';
+import { AnalyticsProvider } from '@/lib/analytics/AnalyticsProvider';
+import { PerformanceProvider } from '@/lib/perf/PerformanceProvider';
+import { ThemeManager } from '@/components/os/ThemeManager';
+
 const display = Space_Grotesk({ subsets: ['latin'], variable: '--font-display' });
 const body = Inter({ subsets: ['latin'], variable: '--font-body' });
 
-// Export the metadata object
 export const metadata = baseMetadata;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -13,9 +20,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <PersonStructuredData />
       </head>
       <body>
-        <A11yProvider>
-          {children}
-        </A11yProvider>
+        <PerformanceProvider>
+          <AnalyticsProvider>
+            <A11yProvider>
+              <ThemeManager />
+              {children}
+            </A11yProvider>
+          </AnalyticsProvider>
+        </PerformanceProvider>
         {process.env.NODE_ENV === 'development' && (
           <>
             <DevAxeAudit />
