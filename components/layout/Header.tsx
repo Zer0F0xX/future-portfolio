@@ -1,9 +1,15 @@
 'use client';
 
 import Link from 'next/link';
+import type { Route } from 'next';
 import { usePathname } from 'next/navigation';
 
-const navLinks = [
+type NavLink = {
+  href: Route;
+  label: string;
+};
+
+const navLinks: NavLink[] = [
   { href: '/', label: 'Home' },
   { href: '/work', label: 'Work' },
   { href: '/about', label: 'About' },
