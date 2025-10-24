@@ -1,50 +1,32 @@
-import './globals.css';
-import type { Metadata } from 'next';
-import { ErrorBoundary } from '@/components/ErrorBoundary';
-import { A11yProvider } from '@/components/A11yProvider';
-import { Header } from '@/components/layout/Header';
-import { JsonLd } from '@/components/layout/JsonLd';
+import { baseMetadata } from '@/app/metadata'; // Import base metadata
 import { Space_Grotesk, Inter } from 'next/font/google';
+import { A11yProvider } from '@/lib/a11y/A11yProvider';
+import { DevAxeAudit } from '@/lib/a11y/DevAxeAudit';
+import { FpsHud } from '@/lib/perf/FpsHud';
+import { PersonStructuredData } from '@/components/seo/StructuredData';
 
 const display = Space_Grotesk({ subsets: ['latin'], variable: '--font-display' });
 const body = Inter({ subsets: ['latin'], variable: '--font-body' });
 
-const personSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: 'Anna Tennyson',
-  url: 'https://paid.ca', // Replace with the actual production URL
-  jobTitle: 'Futurist Web Architect',
-  sameAs: [
-    'https://github.com/foxctrl', // Replace with actual links
-    'https://www.linkedin.com/in/annatennyson',
-  ],
-};
-
-export const metadata: Metadata = {
-  title: 'PAID.ca — Dimensional Archive',
-  description: 'Anna Tennyson · Futurist Web Architect. Building futures disguised as interfaces.',
-  openGraph: {
-    title: 'PAID.ca — Dimensional Archive',
-    description: 'Anna Tennyson · Futurist Web Architect. Building futures disguised as interfaces.',
-    url: 'https://paid.ca', // Replace with the actual production URL
-    siteName: 'PAID.ca',
-    locale: 'en_US',
-    type: 'website',
-  },
-};
+// Export the metadata object
+export const metadata = baseMetadata;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${display.variable} ${body.variable}`}>
-      <body className="bg-gradient-to-b from-[#03050d] via-[#060a18] to-[#0b1026] text-slate-100">
-        <Header />
-        <JsonLd data={personSchema} />
-        <div id="page-content">
-          <A11yProvider>
-            <ErrorBoundary>{children}</ErrorBoundary>
-          </A11yProvider>
-        </div>
+      <head>
+        <PersonStructuredData />
+      </head>
+      <body>
+        <A11yProvider>
+          {children}
+        </A11yProvider>
+        {process.env.NODE_ENV === 'development' && (
+          <>
+            <DevAxeAudit />
+            <FpsHud />
+          </>
+        )}
       </body>
     </html>
   );

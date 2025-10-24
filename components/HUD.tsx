@@ -1,9 +1,27 @@
+// File: components/HUD.tsx
 'use client';
 
 import { useSceneStore } from '@/stores/sceneStore';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ReduceMotionToggle } from './ui/ReduceMotionToggle';
 import { orbWorlds } from '@/data/portfolio';
+import { usePerformanceStore } from '@/lib/performanceStore';
+
+function PerformanceToggle() {
+  const { tier, setTier, _hasHydrated } = usePerformanceStore();
+
+  if (!_hasHydrated) return null;
+
+  return (
+    <button
+      onClick={() => setTier(tier === 'High' ? 'Low' : 'High')}
+      className="rounded-full border border-cyan-200/30 px-3 py-1 text-[0.6rem] uppercase tracking-[0.2em] text-cyan-100/70 hover:bg-cyan-200/10"
+      aria-pressed={tier === 'High'}
+    >
+      Quality: {tier}
+    </button>
+  );
+}
 
 export default function HUD() {
   const activeOrb = useSceneStore((state) => state.activeOrb);
@@ -19,6 +37,7 @@ export default function HUD() {
         </span>
       </div>
       <div className="pointer-events-auto flex items-start gap-4">
+        <PerformanceToggle />
         <ReduceMotionToggle />
         <AnimatePresence>
           {orb && (
