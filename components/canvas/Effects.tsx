@@ -12,7 +12,7 @@ export function Effects() {
   }
 
   return (
-    <EffectComposer disableNormalPass>
+    <EffectComposer>
       <Bloom luminanceThreshold={0.2} mipmapBlur intensity={1.2} />
       <DepthOfField focusDistance={0.025} focalLength={0.03} bokehScale={4} />
     </EffectComposer>
