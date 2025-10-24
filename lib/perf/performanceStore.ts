@@ -1,37 +1,33 @@
+'use client';
+
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-export type PerformanceTier = 'Low' | 'Medium' | 'High';
+export type PerformanceTier = 'low' | 'medium' | 'high';
 
-type PerformanceState = {
+export interface PerformanceState {
   tier: PerformanceTier;
-  isGpuTierKnown: boolean;
-  setTier: (tier: PerformanceTier) => void;
-  detectGpuTier: () => void;
-};
-
-const getGpuTier = (): PerformanceTier => {
-  if (typeof window === 'undefined') return 'Medium';
-  const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-  if (isMobile) return 'Medium';
-  return 'High';
-};
+  setTier: (t: PerformanceTier) => void;
+  hydrated: boolean;
+}
 
 export const usePerformanceStore = create<PerformanceState>()(
   persist(
-    (set, get) => ({
-      tier: 'Medium',
-      isGpuTierKnown: false,
-      setTier: (tier) => set({ tier }),
-      detectGpuTier: () => {
-        if (get().isGpuTierKnown) return;
-        const detectedTier = getGpuTier();
-        set({ tier: detectedTier, isGpuTierKnown: true });
-        console.log(`GPU Tier Detected: ${detectedTier}`);
-      },
+    (set) => ({
+      tier: 'medium',
+      hydrated: false,
+      setTier: (t) => set({ tier: t }),
     }),
     {
-      name: 'paid-performance-storage',
+      name: 'performance',
+      onRehydrateStorage: () => (state, error) => {
+        if (error) {
+          console.error('Failed to rehydrate performance store', error);
+        }
+        if (state) {
+          state.hydrated = true;
+        }
+      },
     }
   )
 );

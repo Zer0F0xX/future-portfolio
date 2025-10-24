@@ -1,13 +1,8 @@
 'use client';
 import { useEffect } from 'react';
-import { usePerformanceStore } from './performanceStore';
 
 export function PerformanceProvider({ children }: { children: React.ReactNode }) {
-  const detectGpuTier = usePerformanceStore((s) => s.detectGpuTier);
-
-  useEffect(() => {
-    detectGpuTier();
-  }, [detectGpuTier]);
-
+  // This provider's purpose is to ensure the performance store is available
+  // for client components. The GPU detection logic has been removed.
   return <>{children}</>;
 }

@@ -3,9 +3,9 @@
 import { useA11yStore } from '@/stores/a11yStore';
 
 export function ReduceMotionToggle() {
-  const { prefersReducedMotion, setPrefersReducedMotion, _hasHydrated } = useA11yStore();
+  const { prefersReducedMotion, setPrefersReducedMotion, hydrated } = useA11yStore();
 
-  if (!_hasHydrated) {
+  if (!hydrated) {
     return null; // Don't render on the server or before hydration
   }
 

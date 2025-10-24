@@ -5,18 +5,25 @@ import { useSceneStore } from '@/stores/sceneStore';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ReduceMotionToggle } from './ui/ReduceMotionToggle';
 import { orbWorlds } from '@/data/portfolio';
-import { usePerformanceStore } from '@/lib/perf/performanceStore';
+import { usePerformanceStore, PerformanceTier } from '@/lib/perf/performanceStore';
 
 function PerformanceToggle() {
-  const { tier, setTier, _hasHydrated } = usePerformanceStore();
+  const { tier, setTier, hydrated } = usePerformanceStore();
 
-  if (!_hasHydrated) return null;
+  if (!hydrated) return null;
+
+  const cycleTier = () => {
+    const tiers: PerformanceTier[] = ['low', 'medium', 'high'];
+    const currentIndex = tiers.indexOf(tier);
+    const nextIndex = (currentIndex + 1) % tiers.length;
+    setTier(tiers[nextIndex]);
+  };
 
   return (
     <button
-      onClick={() => setTier(tier === 'High' ? 'Low' : 'High')}
+      onClick={cycleTier}
       className="rounded-full border border-cyan-200/30 px-3 py-1 text-[0.6rem] uppercase tracking-[0.2em] text-cyan-100/70 hover:bg-cyan-200/10"
-      aria-pressed={tier === 'High'}
+      aria-pressed={tier === 'high'}
     >
       Quality: {tier}
     </button>

@@ -31,7 +31,7 @@ async function loadContent<T extends z.ZodTypeAny>(
     const parsedData = schema.parse({
       ...data,
       slug: path.basename(file, '.mdx'),
-    });
+    }) as object;
 
     return { ...parsedData, content };
   });

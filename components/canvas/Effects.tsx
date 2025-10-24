@@ -2,10 +2,10 @@
 'use client';
 
 import { EffectComposer, Bloom, DepthOfField } from '@react-three/postprocessing';
-import { usePerformanceStore } from '@/lib/performanceStore';
+import { usePerformanceStore, PerformanceState } from '@/lib/perf/performanceStore';
 
 export function Effects() {
-  const tier = usePerformanceStore((state) => state.tier);
+  const tier = usePerformanceStore((state: PerformanceState) => state.tier);
 
   if (tier === 'Low') {
     return null;

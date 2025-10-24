@@ -5,7 +5,7 @@ import { Canvas } from '@react-three/fiber';
 import { projects } from '@/content/projects';
 import { ProjectCrystal } from './ProjectCrystal';
 import { Effects } from './Effects';
-import { CameraRig } from './CameraRig';
+import { CameraRig } from '@/components/os/CameraRig';
 
 // Simple algorithm to position projects in a spiral
 const getProjectPosition = (index: number): [number, number, number] => {

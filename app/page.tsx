@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { SkipLink } from '@/components/ui/SkipLink';
 import { WebGLSupport } from '@/components/os/WebGLSupport';
-import { TimelineRail } from '@/components/os/TimelineRail';
+import { TimelineRail } from '@/components/TimelineRail';
 import { PerformanceToggle } from '@/components/ui/PerformanceToggle';
 import { HeroHook } from '@/components/copy/HeroHook';
 import { useBootSequence } from '@/lib/motion/sequence';

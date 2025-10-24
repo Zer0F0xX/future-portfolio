@@ -1,12 +1,10 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-type A11yState = {
+export type A11yState = {
   prefersReducedMotion: boolean;
   setPrefersReducedMotion: (val: boolean) => void;
-  // This will be initialized on the client to check the media query and localStorage
-  _hasHydrated: boolean;
-  setHasHydrated: (val: boolean) => void;
+  hydrated: boolean;
 };
 
 export const useA11yStore = create<A11yState>()(
@@ -14,11 +12,15 @@ export const useA11yStore = create<A11yState>()(
     (set) => ({
       prefersReducedMotion: false, // Default value, will be updated on hydration
       setPrefersReducedMotion: (val) => set({ prefersReducedMotion: val }),
-      _hasHydrated: false,
-      setHasHydrated: (val) => set({ _hasHydrated: val }),
+      hydrated: false,
     }),
     {
       name: 'paid-a11y-storage', // unique name for localStorage key
+      onRehydrateStorage: () => (state, error) => {
+        if (state) {
+          state.hydrated = true;
+        }
+      },
     }
   )
 );
