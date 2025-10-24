@@ -14,7 +14,7 @@ type ContentItem<T> = T & {
 async function loadContent<T extends z.ZodTypeAny>(
   dir: string,
   schema: T
-): Promise<ContentItem<z.infer<T>>[]> {
+): Promise<Array<z.infer<T> & { content: string }>> {
   const fullDir = path.join(contentDir, dir);
   if (!fs.existsSync(fullDir)) {
     console.warn(`Directory not found: ${fullDir}`);

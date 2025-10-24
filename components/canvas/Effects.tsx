@@ -7,7 +7,7 @@ import { usePerformanceStore, PerformanceState } from '@/lib/perf/performanceSto
 export function Effects() {
   const tier = usePerformanceStore((state: PerformanceState) => state.tier);
 
-  if (tier === 'Low') {
+  if (tier === 'low') {
     return null;
   }
 
