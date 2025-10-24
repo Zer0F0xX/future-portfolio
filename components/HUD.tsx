@@ -5,7 +5,7 @@ import { useSceneStore } from '@/stores/sceneStore';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ReduceMotionToggle } from './ui/ReduceMotionToggle';
 import { orbWorlds } from '@/data/portfolio';
-import { usePerformanceStore } from '@/lib/performanceStore';
+import { usePerformanceStore } from '@/lib/perf/performanceStore';
 
 function PerformanceToggle() {
   const { tier, setTier, _hasHydrated } = usePerformanceStore();
