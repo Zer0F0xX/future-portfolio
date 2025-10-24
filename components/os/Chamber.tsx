@@ -1,5 +1,5 @@
 'use client';
-import { Canvas } from '@react-three-fiber';
+import { Canvas } from '@react-three/fiber';
 import { Grid } from '@react-three/drei';
 import { HoloAvatar } from '@/components/os/HoloAvatar';
 import { ShardOrbit } from '@/components/os/ShardOrbit';
