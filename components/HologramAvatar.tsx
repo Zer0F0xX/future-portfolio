@@ -9,7 +9,8 @@ import { useSceneStore } from '@/stores/sceneStore';
 const FALLBACK_GEOMETRY = new THREE.CapsuleGeometry(0.7, 1.2, 24, 48);
 
 export function HologramAvatar() {
-  const gltf = useGLTF('/models/hologram.glb') as any;
+  // const gltf = useGLTF('/models/hologram.glb') as any;
+  const gltf = undefined;
 
   const group = useRef<THREE.Group>(null);
   const head = useRef<THREE.Mesh>(null);
@@ -81,4 +82,4 @@ export function HologramAvatar() {
   }
 }
 
-useGLTF.preload('/models/hologram.glb');
+// useGLTF.preload('/models/hologram.glb');
