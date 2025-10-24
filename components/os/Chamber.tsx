@@ -3,7 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { Grid } from '@react-three/drei';
 import { HoloAvatar } from '@/components/os/HoloAvatar';
 import { ShardOrbit } from '@/components/os/ShardOrbit';
-import { Passes } from '@/components/os/Passes';
+import Passes from '@/components/os/Passes';
 import { CameraRig } from '@/components/os/CameraRig';
 
 function SceneContent() {

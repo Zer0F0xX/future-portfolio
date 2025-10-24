@@ -33,7 +33,7 @@ export default function TimelineRail() {
         {timelinePhases.map((phase) => (
           <button
             key={phase.id}
-            className={['transition-colors', phase.id === activePhase ? 'text-cyan-100' : ''].join(' ')}
+            className={`transition-colors ${phase.id === activePhase ? 'text-cyan-100' : ''}`}
             onClick={() => setPhase(phase.id)}
             type="button"
           >

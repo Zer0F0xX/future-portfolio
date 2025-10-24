@@ -1,3 +1,4 @@
+// stores/performanceStore.ts
 'use client';
 
 import { create } from 'zustand';
@@ -20,7 +21,7 @@ export const usePerformanceStore = create<PerformanceState>()(
     }),
     {
       name: 'performance',
-      onRehydrateStorage: () => (state, error) => {
+onRehydrateStorage: () => (state, error) => {
         if (error) {
           console.error('Failed to rehydrate performance store', error);
         }

@@ -76,7 +76,7 @@ export function ShardOrbit() {
     const item = navItems[focusedIndex];
     const shardPosition = new THREE.Vector3().fromArray(positions[focusedIndex]);
     enterProjectView(shardPosition);
-    setTimeout(() => router.push(item.href), 800);
+    setTimeout(() => router.push(item.href as any), 800);
   };
 
   useKeyboardMap({
