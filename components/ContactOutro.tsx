@@ -12,7 +12,11 @@ export default function ContactOutro() {
     <motion.footer
       className="pointer-events-auto relative z-30 mx-auto mt-[40vh] flex w-full max-w-4xl flex-col items-center gap-6 px-6 pb-32 text-center"
       initial={{ opacity: 0, y: 60 }}
-      whileInView={{ opacity: hasOrb ? 0 : 1, y: hasOrb ? 60 : 0 }}
+      whileInView={{
+        opacity: hasOrb ? 0 : 1,
+        y: hasOrb ? 60 : 0,
+        display: hasOrb ? 'none' : 'flex',
+      }}
       transition={{ duration: prefersReducedMotion ? 0.3 : 0.8, ease: 'easeOut' }}
       viewport={{ once: true }}
       aria-label="Contact outro"

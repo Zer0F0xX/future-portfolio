@@ -26,7 +26,7 @@ export default function TimelineRail() {
             const phase = timelinePhases[idx];
             if (phase) setPhase(phase.id);
           }}
-          aria-valuetext={`${activePhase}`}
+          aria-valuetext={timelinePhases.find((p) => p.id === activePhase)?.label ?? ''}
         />
       </div>
       <div className="mt-3 flex justify-between text-[0.55rem] uppercase tracking-[0.28em] text-cyan-100/50">

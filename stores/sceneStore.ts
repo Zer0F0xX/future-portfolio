@@ -16,7 +16,6 @@ type OrbData = {
 
 interface SceneState {
   overlayVisible: boolean;
-  prefersReducedMotion: boolean;
   cameraTarget: { position: Vector3; lookAt: Vector3 };
   activeOrb?: OrbData;
   activePhase: string;
@@ -24,14 +23,11 @@ interface SceneState {
   focusOrb(orb: OrbData): void;
   openOrb(orb: OrbData): void;
   closeOrb(): void;
-  setReducedMotion(val: boolean): void;
   setPhase(id: string): void;
 }
 
 export const useSceneStore = create<SceneState>((set, get) => ({
   overlayVisible: true,
-  prefersReducedMotion:
-    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   cameraTarget: {
     position: new Vector3(0, 2.4, 9),
     lookAt: new Vector3(0, 1.6, 0)
@@ -61,8 +57,7 @@ export const useSceneStore = create<SceneState>((set, get) => ({
       return;
     }
     if (typeof window !== 'undefined') {
-      const prefersReducedMotion = get().prefersReducedMotion;
-      if (!prefersReducedMotion && orb.voice && 'speechSynthesis' in window) {
+      if (orb.voice && 'speechSynthesis' in window) {
         const utter = new SpeechSynthesisUtterance(orb.voice);
         utter.pitch = 0.78;
         utter.rate = 0.92;
@@ -86,6 +81,5 @@ export const useSceneStore = create<SceneState>((set, get) => ({
         lookAt: new Vector3(0, 1.6, 0)
       }
     }),
-  setReducedMotion: (val) => set({ prefersReducedMotion: val }),
   setPhase: (id) => set({ activePhase: id })
 }));

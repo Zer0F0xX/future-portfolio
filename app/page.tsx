@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect } from "react";
+import { useSceneStore } from "@/stores/sceneStore";
 import HUD from "@/components/HUD";
 import TimelineRail from "@/components/TimelineRail";
 import IntroChips from "@/components/IntroChips";
@@ -13,19 +14,19 @@ const ContactOutro = dynamic(() => import("@/components/ContactOutro"), { ssr: f
 
 export default function Page() {
   useEffect(() => {
-    document.documentElement.classList.add("hydrated");
+    document.documentElement.classList.add('hydrated');
   }, []);
 
   return (
     <main className="relative min-h-screen overflow-hidden">
-      <a className="skip-link" href="#contact-outro">
+      <a className="skip-link" href="#page-content">
         Skip to contact
       </a>
       <HeroScene />
       <HUD />
       <IntroChips />
       <TimelineRail />
-      <FacetStageOverlay />
+      {useSceneStore((state) => state.activeOrb) ? <FacetStageOverlay /> : null}
       <LegacyPanels />
       <section id="contact-outro">
         <ContactOutro />

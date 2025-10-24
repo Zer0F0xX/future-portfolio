@@ -5,7 +5,7 @@ import { Suspense, useEffect } from 'react';
 import { Stars } from '@react-three/drei';
 import ArrivalOverlay from './ArrivalOverlay';
 import { ArrivalParticles } from './ArrivalParticles';
-import { HologramAvatar } from './HologramAvatar';
+import { HologramLoader } from './HologramLoader';
 import { FacetAxis } from './FacetAxis';
 import HologramHalo from './HologramHalo';
 import { useSceneStore } from '@/stores/sceneStore';
@@ -30,7 +30,7 @@ function SceneContent() {
       <pointLight position={[-3.2, 1.1, -4.6]} intensity={1.4} color="#ff57f6" />
       <ArrivalParticles />
       <HologramHalo />
-      <HologramAvatar />
+      <HologramLoader />
       <FacetAxis />
       <Stars radius={60} depth={40} count={1200} factor={2} fade />
     </>
