@@ -1,3 +1,24 @@
+export type OrbSection = {
+  title: string;
+  subtitle?: string;
+  description: string;
+  metrics?: string[];
+  bullets?: string[];
+  tags?: string[];
+  link?: string;
+};
+
+export type OrbWorld = {
+  id: string;
+  title: string;
+  accent: string;
+  headline: string;
+  body: string;
+  highlights?: string[];
+  voice?: string;
+  sections?: OrbSection[];
+};
+
 export const bootSequence = [
   'Booting Anna Tennyson archival core …',
   'Compiling immersive interface dossiers …',
@@ -188,19 +209,7 @@ export const orbWorlds = [
       }
     ]
   }
-];
-
-export type OrbWorld = (typeof orbWorlds)[number];
-
-export type OrbSection = {
-  title: string;
-  subtitle?: string;
-  description: string;
-  metrics?: string[];
-  bullets?: string[];
-  tags?: string[];
-  link?: string;
-};
+] satisfies OrbWorld[];
 
 export const timelinePhases = [
   {
