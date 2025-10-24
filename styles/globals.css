@@ -60,3 +60,50 @@ body {
 .skip-link:focus {
   transform: translate(-50%, 0);
 }
+/* File: styles/motion.css */
+@layer base {
+  :root {
+    /* Easing Functions */
+    --ease-in-quad: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+    --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --ease-in-out-quad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+
+    /* Durations (in ms) */
+    --duration-fast: 200ms;
+    --duration-subtle: 240ms;
+    --duration-base: 420ms;
+    --duration-slow: 600ms;
+  }
+}
+/* File: styles/tokens.css */
+@layer base {
+  :root {
+    /* Default to 'Present' era theme */
+    --color-accent: theme(colors.neonCyan);
+    --color-secondary: theme(colors.irisMagenta);
+    --motion-speed-factor: 1.0;
+    --particle-density: 1.0;
+  }
+
+  [data-era="Origins"] {
+    --color-accent: theme(colors.amber.400); /* A warmer, less digital color */
+    --color-secondary: theme(colors.sky.300);
+    --motion-speed-factor: 0.7; /* Slower, more deliberate motion */
+    --particle-density: 0.5;
+  }
+
+  [data-era="Present"] {
+    --color-accent: theme(colors.neonCyan);
+    --color-secondary: theme(colors.irisMagenta);
+    --motion-speed-factor: 1.0;
+    --particle-density: 1.0;
+  }
+
+  [data-era="Vector"] {
+    --color-accent: theme(colors.irisMagenta);
+    --color-secondary: theme(colors.prism.mid);
+    --motion-speed-factor: 1.4; /* Faster, more futuristic motion */
+    --particle-density: 1.5;
+  }
+}

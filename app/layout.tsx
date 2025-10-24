@@ -1,6 +1,4 @@
 import '@/styles/globals.css';
-import '@/styles/motion.css';
-import '@/styles/tokens.css';
 
 const display = Space_Grotesk({ subsets: ['latin'], variable: '--font-display' });
 const body = Inter({ subsets: ['latin'], variable: '--font-body' });
