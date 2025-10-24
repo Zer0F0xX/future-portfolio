@@ -4,38 +4,50 @@
 import { EffectComposer, Bloom, DepthOfField, ChromaticAberration } from '@react-three/postprocessing';
 import { BlendFunction } from 'postprocessing';
 import { Vector2 } from 'three';
-import { usePerformanceStore } from '@/lib/perf/performanceStore';
-import { featureFlags } from '@/lib/config';
 
-export default function Passes() {
-  const tier = usePerformanceStore((s) => s.tier);
+interface Props {
+  tier: 'low' | 'medium' | 'high';
+  featureFlags: {
+    bloom: boolean;
+    dof: boolean;
+    chromaticAberration: boolean;
+  };
+}
 
-  if (tier === 'low') {
-    return null;
+export default function Passes({ tier, featureFlags }: Props) {
+  const effects: JSX.Element[] = [];
+
+  if (featureFlags.bloom) {
+    effects.push(
+      <Bloom
+        key="bloom"
+        luminanceThreshold={0.1}
+        intensity={tier === 'high' ? 1.5 : 1.0}
+        mipmapBlur
+      />,
+    );
   }
 
-  return (
-    <EffectComposer>
-      {featureFlags.bloom ? (
-        <Bloom
-          luminanceThreshold={0.1}
-          intensity={tier === 'high' ? 1.5 : 1.0}
-          mipmapBlur
-        />
-      ) : null}
-      {tier === 'high' && featureFlags.dof ? (
-        <DepthOfField
-          focusDistance={0.02}
-          focalLength={0.05}
-          bokehScale={6}
-        />
-      ) : null}
-      {tier === 'high' && featureFlags.chromaticAberration ? (
-        <ChromaticAberration
-          blendFunction={BlendFunction.NORMAL}
-          offset={new Vector2(0.001, 0.001)}
-        />
-      ) : null}
-    </EffectComposer>
-  );
+  if (tier === 'high' && featureFlags.dof) {
+    effects.push(
+      <DepthOfField
+        key="dof"
+        focusDistance={0.02}
+        focalLength={0.05}
+        bokehScale={6}
+      />,
+    );
+  }
+
+  if (tier === 'high' && featureFlags.chromaticAberration) {
+    effects.push(
+      <ChromaticAberration
+        key="ca"
+        blendFunction={BlendFunction.NORMAL}
+        offset={new Vector2(0.001, 0.001)}
+      />,
+    );
+  }
+
+  return <EffectComposer>{effects}</EffectComposer>;
 }

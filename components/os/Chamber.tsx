@@ -6,6 +6,9 @@ import { ShardOrbit } from '@/components/os/ShardOrbit';
 import Passes from '@/components/os/Passes';
 import { CameraRig } from '@/components/os/CameraRig';
 
+import { usePerformanceStore } from '@/lib/perf/performanceStore';
+import { featureFlags } from '@/lib/config';
+
 function SceneContent() {
   return (
     <>
@@ -28,6 +31,8 @@ function SceneContent() {
 }
 
 export function Chamber() {
+  const tier = usePerformanceStore((s) => s.tier);
+
   return (
     <div className="fixed inset-0 z-0 h-screen w-screen">
       <Canvas
@@ -39,7 +44,7 @@ export function Chamber() {
         <ambientLight intensity={0.2} />
         <pointLight position={[0, 5, 0]} intensity={1} color="white" />
         <SceneContent />
-        <Passes />
+        <Passes tier={tier} featureFlags={featureFlags} />
         <CameraRig />
       </Canvas>
     </div>
