@@ -4,11 +4,26 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useSceneStore } from '@/stores/sceneStore';
 import { orbWorlds } from '@/data/portfolio';
 
+type BaseSection = {
+  title: string;
+  subtitle: string;
+  description: string;
+  /** optional chips like “GLSL”, “WCAG 2.2”, etc. */
+  metrics?: string[];
+  /** optional tags like “Next.js”, “React”, etc. */
+  tags?: string[];
+};
+
+export type FacetSection =
+  | (BaseSection & { bullets: string[] })
+  | (BaseSection & { link: string });
+
 export default function FacetStageOverlay() {
   const activeOrb = useSceneStore((state) => state.activeOrb);
   const close = useSceneStore((state) => state.closeOrb);
 
   const orb = activeOrb ? orbWorlds.find((item) => item.id === activeOrb.id) : undefined;
+  const sections: FacetSection[] = orb?.sections ?? [];
 
   return (
     <AnimatePresence>
@@ -62,7 +77,7 @@ export default function FacetStageOverlay() {
                 </button>
               </div>
               <div className="grid gap-4 md:grid-cols-2">
-                {orb.sections?.map((section) => (
+                {sections.map((section) => (
                   <div key={section.title} className="rounded-2xl border border-cyan-200/15 bg-black/40 p-6 text-left">
                     <div className="flex flex-col gap-1">
                       <p className="text-[0.6rem] uppercase tracking-[0.3em] text-cyan-200/60">{section.subtitle}</p>
@@ -80,7 +95,7 @@ export default function FacetStageOverlay() {
                         ))}
                       </ul>
                     ) : null}
-                    {section.bullets?.length ? (
+                    {'bullets' in section && section.bullets?.length ? (
                       <ul className="mt-3 list-disc space-y-1 pl-4 text-[0.75rem] text-cyan-100/70">
                         {section.bullets.map((item) => (
                           <li key={item}>{item}</li>
@@ -96,14 +111,14 @@ export default function FacetStageOverlay() {
                         ))}
                       </div>
                     ) : null}
-                    {section.link ? (
+                    {'link' in section && section.link ? (
                       <a
-                      href={section.link}
-                      className="mt-4 inline-flex items-center gap-2 text-xs uppercase tracking-[0.28em] text-cyan-200 hover:text-cyan-50"
-                    >
-                      View details →
-                    </a>
-                  ) : null}
+                        href={section.link}
+                        className="mt-4 inline-flex items-center gap-2 text-xs uppercase tracking-[0.28em] text-cyan-200 hover:text-cyan-50"
+                      >
+                        View details →
+                      </a>
+                    ) : null}
                 </div>
               ))}
             </div>

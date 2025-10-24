@@ -8,7 +8,7 @@ export type BaseSection = {
 
 export type OrbSection =
   | (BaseSection & { bullets: string[]; link?: string })
-  | (BaseSection & { link: string; bullets?: string[] });
+  | (BaseSection & { link: string; bullets?: never });
 
 export type OrbWorld = {
   id: string;
