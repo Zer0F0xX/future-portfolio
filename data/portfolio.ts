@@ -1,12 +1,14 @@
-export type OrbSection = {
+export type BaseSection = {
   title: string;
-  subtitle?: string;
+  subtitle: string;
   description: string;
   metrics?: string[];
-  bullets?: string[];
   tags?: string[];
-  link?: string;
 };
+
+export type OrbSection =
+  | (BaseSection & { bullets: string[]; link?: string })
+  | (BaseSection & { link: string; bullets?: string[] });
 
 export type OrbWorld = {
   id: string;
