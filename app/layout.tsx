@@ -1,9 +1,11 @@
 import '@/styles/globals.css';
 
-import { PersonStructuredData } from '@/components/seo/StructuredData';
+import { baseMetadata } from '@/app/metadata';
+import { Space_Grotesk, Inter } from 'next/font/google';
 import { A11yProvider } from '@/components/A11yProvider';
 import { DevAxeAudit } from '@/lib/a11y/DevAxeAudit';
 import { FpsHud } from '@/lib/perf/FpsHud';
+import { PersonStructuredData } from '@/components/seo/StructuredData';
 import { AnalyticsProvider } from '@/lib/analytics/AnalyticsProvider';
 import { PerformanceProvider } from '@/lib/perf/PerformanceProvider';
 import { ThemeManager } from '@/components/os/ThemeManager';
