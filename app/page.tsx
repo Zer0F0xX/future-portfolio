@@ -7,6 +7,7 @@ import TimelineRail from '@/components/TimelineRail';
 import { PerformanceToggle } from '@/components/ui/PerformanceToggle';
 import { HeroHook } from '@/components/copy/HeroHook';
 import { useBootSequence } from '@/lib/motion/sequence';
+import { Scene } from '@/components/canvas/Scene';
 
 export default function HomePage() {
   const [booted, setBooted] = useState(false);
@@ -35,6 +36,9 @@ export default function HomePage() {
         )}
       </AnimatePresence>
 
+      {/* 3D Holographic Background Scene */}
+      {booted && <Scene />}
+
       <main id="main-content" ref={bootScope} className="relative z-10 h-screen w-screen opacity-0">
         {booted && (
           <>
@@ -44,7 +48,7 @@ export default function HomePage() {
             <div className="fixed left-4 top-4 z-50">
               <PerformanceToggle />
             </div>
-            
+
             <div data-boot-sequence="1" className="flex h-full items-center justify-center">
               <HeroHook />
             </div>
