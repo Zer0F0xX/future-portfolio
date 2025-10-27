@@ -1,0 +1,98 @@
+---
+slug: holo-commerce
+title: HoloCommerce Platform
+summary: Volumetric retail experience with AI-driven personalization and spatial merchandising for premium fashion brands.
+role: Lead Product Architect
+stack:
+  - React Three Fiber
+  - WebXR
+  - TensorFlow
+  - Node.js
+  - PostgreSQL
+dates:
+  start: "2048-03"
+  end: "2049-01"
+media:
+  - https://images.unsplash.com/photo-1441986300917-64674bd600d8
+  - https://images.unsplash.com/photo-1472851294608-062f824d29cc
+metrics:
+  - label: Conversion Rate
+    value: "+37%"
+    description: "Compared to traditional e-commerce"
+  - label: Average Dwell Time
+    value: "9.3 min"
+    description: "3x industry average"
+  - label: Markets Launched
+    value: "5"
+    description: "NYC, Tokyo, London, Paris, Dubai"
+links:
+  - label: Live Demo
+    href: https://holo-commerce-demo.vercel.app
+  - label: Case Study PDF
+    href: https://example.com/holo-commerce.pdf
+published: true
+featured: true
+---
+
+## The Challenge
+
+Premium fashion brands were losing customers to immersive retail experiences. Traditional e-commerce felt flat and transactional. Customers wanted to *feel* the products before buying, but physical stores couldn't scale globally.
+
+## Our Approach
+
+I led a cross-functional team to design a **volumetric retail platform** that brings the magic of in-store shopping to any device.
+
+### Key Features
+
+- **Spatial Merchandising**: Products float in 3D space, organized by style, mood, and occasion
+- **AI Stylist**: GPT-4 powered copilot that suggests outfits based on user preferences and body type
+- **Try-Before-You-Buy**: AR overlay using device camera for instant fitting
+- **Social Shopping**: Invite friends into your virtual showroom for real-time feedback
+
+### Technical Architecture
+
+```typescript
+// Spatial product grid with LOD optimization
+<Suspense fallback={<LoadingGrid />}>
+  <ProductGrid
+    products={products}
+    layout="fibonacci-spiral"
+    lod={{ near: 'high', far: 'low' }}
+  />
+</Suspense>
+```
+
+We used **React Three Fiber** for WebXR rendering, with aggressive performance optimization to hit 60fps on Quest 2. The backend runs on **Node.js** with real-time inventory sync via WebSockets.
+
+## Outcomes
+
+The platform launched in 5 major markets and became the **new standard** for luxury e-commerce:
+
+- **37% conversion lift** vs traditional e-commerce
+- **9.3 min average dwell time** (3x industry avg)
+- **$2.4M GMV** in first quarter
+- **Featured in Vogue, Wired, and The Verge**
+
+### Customer Testimonials
+
+> "This is the future of shopping. I spent an hour in the showroom and didn't even realize it."
+> — **Sarah K., NYC**
+
+> "The AI stylist nailed my taste. I bought 3 outfits I never would have found on my own."
+> — **James L., London**
+
+## Lessons Learned
+
+1. **Performance is UX**: We obsessed over 60fps. Anything less broke immersion.
+2. **AI as Copilot**: The stylist didn't replace humans—it augmented discovery.
+3. **Accessibility First**: We built WebXR fallbacks for 2D screens from day one.
+
+## What's Next
+
+We're exploring **haptic feedback integration** and **multi-user showrooms** where friends can shop together across continents.
+
+---
+
+**Project Team**: 8 designers, 12 engineers, 3 data scientists
+**Timeline**: 10 months concept-to-launch
+**Status**: Live in production, scaling to 10 more markets in 2050

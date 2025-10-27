@@ -1,0 +1,56 @@
+---
+id: 42
+date: "2049-08-15"
+title: Breathing Grid Shader Experiment
+tags:
+  - WebGL
+  - Shaders
+  - Bioresponsive
+  - R3F
+slug: breathing-grid-shader
+published: true
+featured: true
+---
+
+## Hypothesis
+
+Can we create an ambient interface that **breathes** with the user? Not animated loops—actual biometric feedback from heart rate sensors.
+
+## Setup
+
+- **Hardware**: Apple Watch HRV data via WebSocket
+- **Shader**: Custom GLSL with sine waves modulated by BPM
+- **Framework**: React Three Fiber + Drei
+
+## Code Snippet
+
+```glsl
+// Fragment shader
+uniform float uHeartRate; // BPM from watch
+uniform float uTime;
+
+void main() {
+  float breath = sin(uTime * (uHeartRate / 60.0) * 0.5);
+  float intensity = smoothstep(0.0, 1.0, breath * 0.5 + 0.5);
+
+  vec3 color = mix(vec3(0.2, 0.3, 0.5), vec3(0.9, 0.4, 0.6), intensity);
+  gl_FragColor = vec4(color, 1.0);
+}
+```
+
+## Results
+
+- Grid pulses in sync with heartbeat
+- Calming effect reported by 8/10 testers
+- Latency: ~200ms (acceptable for ambient UI)
+
+## Next Steps
+
+- Integrate with meditation apps
+- Add HRV variability for stress detection
+- Explore multi-user sync (group breathing)
+
+---
+
+**Status**: Prototype complete, seeking wellness app partners
+**Demo**: [breathing-grid.vercel.app](https://example.com)

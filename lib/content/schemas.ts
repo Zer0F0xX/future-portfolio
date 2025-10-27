@@ -1,57 +1,128 @@
-// File: lib/content/schemas.ts
+/**
+ * Content Schemas
+ * Zod schemas for validating Projects, Experiment Logs, and Essays
+ * Build fails if content doesn't match schema
+ */
+
 import { z } from 'zod';
 
-// Schema for Project Metrics
+// ==================== Project Schema ====================
+
+/**
+ * Project Metrics Schema
+ * Quantifiable outcomes and KPIs
+ */
 const metricSchema = z.object({
-  label: z.string(),
-  value: z.string(),
+  label: z.string().min(1, 'Metric label required'),
+  value: z.string().min(1, 'Metric value required'),
   description: z.string().optional(),
 });
 
-// Schema for Project Links
+/**
+ * Project Links Schema
+ * External links (demos, repos, case studies)
+ */
 const linkSchema = z.object({
-  label: z.string(),
-  href: z.string().url(),
+  label: z.string().min(1, 'Link label required'),
+  href: z.string().url('Must be valid URL'),
+  external: z.boolean().default(true),
 });
 
-// Main Project Schema
+/**
+ * Main Project Schema
+ * Full case study with problem/solution/outcome
+ */
 export const projectSchema = z.object({
-  slug: z.string(),
-  title: z.string(),
-  summary: z.string(),
-  role: z.string(),
-  stack: z.array(z.string()),
+  slug: z.string().regex(/^[a-z0-9-]+$/, 'Slug must be lowercase alphanumeric with hyphens'),
+  title: z.string().min(1, 'Title required').max(100, 'Title too long (max 100 chars)'),
+  summary: z.string().min(10, 'Summary too short').max(300, 'Summary too long (max 300 chars)'),
+  role: z.string().min(1, 'Role required'), // e.g. "Lead Designer", "Product Architect"
+  stack: z.array(z.string()).min(1, 'At least one technology required'),
   dates: z.object({
-    start: z.string(),
-    end: z.string(),
+    start: z.string().regex(/^\d{4}-\d{2}$/, 'Date format must be YYYY-MM'),
+    end: z.string().regex(/^\d{4}-\d{2}$/, 'Date format must be YYYY-MM'),
   }),
-  media: z.array(z.string()).optional(), // URLs to images/videos
+  media: z.array(z.string().url()).optional(), // URLs to images/videos
   metrics: z.array(metricSchema).optional(),
   links: z.array(linkSchema).optional(),
   published: z.boolean().default(true),
+  featured: z.boolean().default(false), // Show on homepage
 });
+
 export type Project = z.infer<typeof projectSchema>;
 
+// ==================== Experiment Log Schema ====================
 
-// Schema for Experiment Logs
+/**
+ * Experiment Log Schema
+ * Lab notes, prototypes, and research artifacts
+ */
 export const logSchema = z.object({
-  id: z.number(),
-  date: z.string().transform((str) => new Date(str)),
-  title: z.string(),
-  tags: z.array(z.string()),
+  id: z.number().int().positive('ID must be positive integer'),
+  date: z.string().refine((val) => !isNaN(Date.parse(val)), {
+    message: 'Invalid date format',
+  }).transform((str) => new Date(str)),
+  title: z.string().min(1, 'Title required').max(100, 'Title too long (max 100 chars)'),
+  tags: z.array(z.string()).min(1, 'At least one tag required').max(10, 'Max 10 tags'),
+  slug: z.string().regex(/^[a-z0-9-]+$/, 'Slug must be lowercase alphanumeric with hyphens'),
   published: z.boolean().default(true),
-  slug: z.string(),
+  featured: z.boolean().default(false),
 });
+
 export type Log = z.infer<typeof logSchema>;
 
+// ==================== Essay Schema ====================
 
-// Schema for Essays
+/**
+ * Essay Schema
+ * Long-form writing with MDX content
+ */
 export const essaySchema = z.object({
-  slug: z.string(),
-  title: z.string(),
-  synopsis: z.string(),
-  cover: z.string().optional(), // URL to cover image
-  keywords: z.array(z.string()),
+  slug: z.string().regex(/^[a-z0-9-]+$/, 'Slug must be lowercase alphanumeric with hyphens'),
+  title: z.string().min(1, 'Title required').max(120, 'Title too long (max 120 chars)'),
+  synopsis: z.string().min(10, 'Synopsis too short').max(400, 'Synopsis too long (max 400 chars)'),
+  cover: z.string().url('Cover must be valid URL').optional(),
+  keywords: z.array(z.string()).min(1, 'At least one keyword required').max(15, 'Max 15 keywords'),
   published: z.boolean().default(true),
+  featured: z.boolean().default(false),
+  date: z.string().refine((val) => !isNaN(Date.parse(val)), {
+    message: 'Invalid date format',
+  }).transform((str) => new Date(str)),
+  readingTime: z.number().int().positive().optional(), // Minutes
 });
+
 export type Essay = z.infer<typeof essaySchema>;
+
+// ==================== Content Item with Body ====================
+
+/**
+ * Generic content item with parsed MDX body
+ */
+export type ContentItem<T> = T & {
+  content: string; // Raw MDX content
+  excerpt?: string; // Auto-generated excerpt
+};
+
+// ==================== Validation Helpers ====================
+
+/**
+ * Validate project at build time
+ * Throws if invalid
+ */
+export function validateProject(data: unknown): Project {
+  return projectSchema.parse(data);
+}
+
+/**
+ * Validate log at build time
+ */
+export function validateLog(data: unknown): Log {
+  return logSchema.parse(data);
+}
+
+/**
+ * Validate essay at build time
+ */
+export function validateEssay(data: unknown): Essay {
+  return essaySchema.parse(data);
+}
