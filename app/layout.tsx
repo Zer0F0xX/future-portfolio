@@ -9,6 +9,7 @@ import { PersonStructuredData } from '@/components/seo/StructuredData';
 import { AnalyticsProvider } from '@/lib/analytics/AnalyticsProvider';
 import { PerformanceProvider } from '@/lib/perf/PerformanceProvider';
 import { ThemeManager } from '@/components/os/ThemeManager';
+import { EnhancedEffects } from '@/components/effects/EnhancedEffects';
 
 const display = Space_Grotesk({ subsets: ['latin'], variable: '--font-display' });
 const body = Inter({ subsets: ['latin'], variable: '--font-body' });
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <A11yProvider>
               <ThemeManager />
               {children}
+              <EnhancedEffects />
             </A11yProvider>
           </AnalyticsProvider>
         </PerformanceProvider>

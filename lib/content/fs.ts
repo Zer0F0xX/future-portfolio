@@ -31,9 +31,9 @@ async function loadContent<T extends z.ZodTypeAny>(
     const parsedData = schema.parse({
       ...data,
       slug: path.basename(file, '.mdx'),
-    }) as object;
+    });
 
-    return { ...parsedData, content };
+    return Object.assign({}, parsedData, { content }) as z.output<T> & { content: string };
   });
 
   return allContent
@@ -43,7 +43,7 @@ async function loadContent<T extends z.ZodTypeAny>(
         return b.date.getTime() - a.date.getTime();
       }
       return 0;
-    });
+    }) as Array<z.infer<T> & { content: string }>;
 }
 
 export const getProjects = () => loadContent('projects', projectSchema);

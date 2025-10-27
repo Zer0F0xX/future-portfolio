@@ -45,6 +45,8 @@ export default function Passes({ tier, featureFlags }: Props) {
         key="ca"
         blendFunction={BlendFunction.NORMAL}
         offset={new Vector2(0.001, 0.001)}
+        radialModulation={false}
+        modulationOffset={0}
       />,
     );
   }

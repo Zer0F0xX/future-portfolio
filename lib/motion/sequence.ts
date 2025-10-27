@@ -22,7 +22,7 @@ export function useBootSequence(isBooted: boolean) {
         await animate(
           '[data-boot-sequence="2"]',
           { opacity: [0, 1] },
-          { duration: 0.4, at: '-0.2' }
+          { duration: 0.4, delay: 0.2 }
         );
       }
     };
