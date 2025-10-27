@@ -17,11 +17,16 @@ module.exports = {
         display: ['var(--font-display)', 'sans-serif'],
         body: ['var(--font-body)', 'sans-serif'],
       },
+      colors: {
+        neonCyan: '#5AF4FF',
+        irisMagenta: '#FF57F6',
+        deepVoid: '#03050d',
+      },
       ringColor: {
-        DEFAULT: '#5AF4FF', // cyan-300
+        DEFAULT: '#5AF4FF', // neonCyan
       },
       ringOffsetColor: {
-        DEFAULT: '#03050d', // slate-950
+        DEFAULT: '#03050d', // deepVoid
       },
     },
   },
